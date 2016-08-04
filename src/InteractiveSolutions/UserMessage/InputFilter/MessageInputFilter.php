@@ -7,7 +7,8 @@
 
 namespace InteractiveSolutions\UserMessage\InputFilter;
 
-use InteractiveSolutions\User\Validator\UserExistsValidator;
+use InteractiveSolutions\Stdlib\Validator\ObjectExists;
+use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use Zend\InputFilter\InputFilter;
 use Zend\Validator\StringLength;
 
@@ -39,9 +40,10 @@ class MessageInputFilter extends InputFilter
                 'required' => false,
                 'validators' => [
                     [
-                        'name'    => UserExistsValidator::class,
+                        'name'    => ObjectExists::class,
                         'options' => [
-                            'fields'  => ['id']
+                            'fields'       => ['id'],
+                            'entity_class' => MessageUserInterface::class,
                         ]
                     ]
                 ]

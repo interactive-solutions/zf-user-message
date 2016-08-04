@@ -6,7 +6,7 @@
 
 namespace InteractiveSolutions\UserMessage\InputFilter;
 
-use IsInteractiveSolutions\Stdlib\Validator\AllEntitiesExistsValidator;
+use InteractiveSolutions\Stdlib\Validator\AllEntitiesExistsValidator;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use Zend\InputFilter\InputFilter;
 

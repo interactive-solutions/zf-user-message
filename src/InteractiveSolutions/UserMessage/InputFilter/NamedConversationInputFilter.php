@@ -8,8 +8,8 @@ declare(strict_types = 1);
 
 namespace InteractiveSolutions\UserMessage\InputFilter;
 
+use InteractiveSolutions\Stdlib\Validator\NoObjectExists;
 use InteractiveSolutions\UserMessage\Entity\NamedConversationEntity;
-use IsInteractiveSolutions\Stdlib\Validator\NoObjectExists;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\InputFilter\InputFilter;
