@@ -17,9 +17,8 @@ final class DirectConversationEntity extends AbstractConversationEntity
     /**
      * DirectConversationEntity constructor.
      * @param array $participants
-     * @param array $data
      */
-    public function __construct(array $participants, array $data)
+    public function __construct(array $participants)
     {
         parent::__construct();
 

@@ -125,9 +125,7 @@ class ConversationService implements EventManagerAwareInterface, ConversationSer
      */
     public function createBetween(MessageUserInterface $identity, MessageUserInterface $target)
     {
-        $conversation = new DirectConversationEntity();
-        $conversation->addParticipant($identity);
-        $conversation->addParticipant($target);
+        $conversation = new DirectConversationEntity([$identity, $target]);
 
         return $this->create($conversation);
     }
