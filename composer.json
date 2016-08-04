@@ -1,0 +1,36 @@
+{
+  "name": "interactive-solutions/zf-user-message",
+  "authors": [
+    {
+      "name":  "Jonas Eriksson",
+      "email": "jonas.eriksson+git@interactivesolutions.se"
+    },
+    {
+      "name": "Erik Norgren",
+      "email": "erik.norgren@interactivesolutions.se"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@git.interactivesolutions.se:isis/stdlib.git"
+    }
+  ],
+  "require": {
+    "php":                          ">=5.5",
+    "zendframework/zendframework":  "~2.5",
+    "zfr/zfr-rest":                 "~0.5.0",
+    "doctrine/doctrine-orm-module": "~0.9.2",
+    "zf-commons/zfc-rbac":          "~2.3",
+    "interactive-solutions/zf-stdlib": "~0.0.1"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "InteractiveSolutions\\UserMessage\\": "src/"
+    },
+    "classmap": [
+      "./Module.php"
+    ]
+  }
+}

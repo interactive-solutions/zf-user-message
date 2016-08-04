@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                   https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+    <entity name="InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity" inheritance-type="SINGLE_TABLE"
+            table="conversations" repository-class="InteractiveSolutions\UserMessage\Repository\ConversationRepository">
+
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <discriminator-column name="type" type="string"/>
+        <discriminator-map>
+            <discriminator-mapping value="direct" class="InteractiveSolutions\UserMessage\Entity\DirectConversationEntity"/>
+            <discriminator-mapping value="group" class="InteractiveSolutions\UserMessage\Entity\GroupConversationEntity"/>
+            <discriminator-mapping value="named" class="InteractiveSolutions\UserMessage\Entity\NamedConversationEntity"/>
+        </discriminator-map>
+
+        <field name="updatedAt" type="datetime" nullable="false"/>
+        <field name="createdAt" type="datetime" nullable="false"/>
+
+        <one-to-many target-entity="InteractiveSolutions\UserMessage\Entity\MessageEntity" mapped-by="conversation" field="messages"
+                     fetch="EXTRA_LAZY">
+            <order-by>
+                <order-by-field name="createdAt" direction="DESC" />
+            </order-by>
+        </one-to-many>
+
+        <many-to-many target-entity="InteractiveSolutions\UserMessage\Entity\MessageUserInterface" field="participants" fetch="EAGER"/>
+    </entity>
+</doctrine-mapping>
