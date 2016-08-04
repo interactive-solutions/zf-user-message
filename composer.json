@@ -10,12 +10,6 @@
       "email": "erik.norgren@interactivesolutions.se"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "git@git.interactivesolutions.se:isis/stdlib.git"
-    }
-  ],
   "require": {
     "php":                          ">=5.5",
     "zendframework/zendframework":  "~2.5",
