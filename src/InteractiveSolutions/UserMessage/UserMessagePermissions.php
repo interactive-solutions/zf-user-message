@@ -19,8 +19,9 @@ final class UserMessagePermissions
     const ADD_PARTICIPANT       = 'interactive-solutions:user-message:add-participant';
     const REMOVE_PARTICIPANT    = 'interactive-solutions:user-message:remove-participant';
 
-    const START_NAMED_CONVERSATION    = 'interactive-solutions:user-message:start-named';
-    const UPDATE_NAMED_CONVERSATION   = 'interactive-solutions:user-message:update-named';
-    const GET_NAMED_CONVERSATION      = 'interactive-solutions:user-message:get-named';
-    const GET_ALL_NAMED_CONVERSATIONS = 'interactive-solutions:user-message:get-all-named';
+    const SEND_NAMED_CONVERSATION_MESSAGE = 'interactive-solutions:user-message:send-named-message';
+    const START_NAMED_CONVERSATION        = 'interactive-solutions:user-message:start-named';
+    const UPDATE_NAMED_CONVERSATION       = 'interactive-solutions:user-message:update-named';
+    const GET_NAMED_CONVERSATION          = 'interactive-solutions:user-message:get-named';
+    const GET_ALL_NAMED_CONVERSATIONS     = 'interactive-solutions:user-message:get-all-named';
 }

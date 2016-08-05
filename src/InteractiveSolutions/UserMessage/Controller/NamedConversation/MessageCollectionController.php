@@ -11,7 +11,6 @@ namespace InteractiveSolutions\UserMessage\Controller\NamedConversation;
 use Doctrine\ORM\EntityRepository;
 use InteractiveSolutions\UserMessage\Entity\MessageEntity;
 use InteractiveSolutions\UserMessage\Entity\NamedConversationEntity;
-use InteractiveSolutions\UserMessage\Hydrator\MessageHydrator;
 use InteractiveSolutions\UserMessage\InputFilter\MessageInputFilter;
 use InteractiveSolutions\UserMessage\Repository\Exception\NamedConversationNotFound;
 use InteractiveSolutions\UserMessage\Repository\MessageRepositoryInterface;
@@ -77,7 +76,7 @@ final class MessageCollectionController extends AbstractRestfulController
     {
         $conversation = $this->getConversation();
 
-        if (!$this->isGranted(UserMessagePermissions::SEND_MESSAGE, $conversation)) {
+        if (!$this->isGranted(UserMessagePermissions::SEND_NAMED_CONVERSATION_MESSAGE, $conversation)) {
             throw new ForbiddenException('User does not have permission to send a message in this conversation');
         }
 
