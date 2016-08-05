@@ -16,7 +16,7 @@
     "zfr/zfr-rest":                 "~0.5.0",
     "doctrine/doctrine-orm-module": "~0.9.2",
     "zf-commons/zfc-rbac":          "~2.3",
-    "interactive-solutions/zf-stdlib": "dev-master"
+    "interactive-solutions/zf-stdlib": "~0.0.1"
   },
 
   "autoload": {
