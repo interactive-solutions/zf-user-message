@@ -69,7 +69,6 @@ class ConversationRepository extends EntityRepository implements ConversationRep
         $builder = $this->createQueryBuilder('conversation')
             ->innerJoin('conversation.participants', 'participants', 'WITH', 'participants.id = :userId')
             ->innerJoin('conversation.participants', 'second', 'WITH', 'second = :secondUser')
-            ->andWhere('conversation.type = :type')
             ->setParameter('userId', $user->getId())
             ->setParameter('secondUser', $secondUser);
 
