@@ -22,9 +22,6 @@
 
         <one-to-many target-entity="InteractiveSolutions\UserMessage\Entity\MessageEntity" mapped-by="conversation" field="messages"
                      fetch="EXTRA_LAZY">
-            <cascade>
-                <cascade-remove/>
-            </cascade>
             <order-by>
                 <order-by-field name="createdAt" direction="DESC" />
             </order-by>
