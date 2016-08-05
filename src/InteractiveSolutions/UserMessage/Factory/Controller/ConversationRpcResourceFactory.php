@@ -9,6 +9,7 @@ namespace InteractiveSolutions\UserMessage\Factory\Controller;
 use Doctrine\ORM\EntityManager;
 use InteractiveSolutions\UserMessage\Controller\ConversationRpcResource;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
+use InteractiveSolutions\UserMessage\Entity\DirectConversationEntity;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Repository\ConversationRepository;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
@@ -34,6 +35,8 @@ class ConversationRpcResourceFactory implements FactoryInterface
 
         /* @var  ConversationRepository $conversationRepository */
         $conversationRepository = $entityManager->getRepository(AbstractConversationEntity::class);
+        /* @var ConversationRepository $pmRepository */
+        $pmRepository           = $entityManager->getRepository(DirectConversationEntity::class);
         $userRepository         = $entityManager->getRepository(MessageUserInterface::class);
 
         /* @var ConversationService $conversationService */
@@ -41,6 +44,7 @@ class ConversationRpcResourceFactory implements FactoryInterface
 
         return new ConversationRpcResource(
             $conversationRepository,
+            $pmRepository,
             $userRepository,
             $conversationService
         );

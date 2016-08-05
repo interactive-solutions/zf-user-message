@@ -64,15 +64,14 @@ class ConversationRepository extends EntityRepository implements ConversationRep
     public function getConversationBetween(
         MessageUserInterface $user,
         MessageUserInterface $secondUser
-    ): AbstractConversationEntity
+    ): DirectConversationEntity
     {
         $builder = $this->createQueryBuilder('conversation')
             ->innerJoin('conversation.participants', 'participants', 'WITH', 'participants.id = :userId')
             ->innerJoin('conversation.participants', 'second', 'WITH', 'second = :secondUser')
             ->andWhere('conversation.type = :type')
             ->setParameter('userId', $user->getId())
-            ->setParameter('secondUser', $secondUser)
-            ->setParameter('type', DirectConversationEntity::TYPE);
+            ->setParameter('secondUser', $secondUser);
 
         $conversation = $builder->getQuery()->getOneOrNullResult();
 

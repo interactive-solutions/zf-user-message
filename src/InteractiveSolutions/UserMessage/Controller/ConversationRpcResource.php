@@ -39,6 +39,11 @@ final class ConversationRpcResource extends AbstractActionController
     private $conversationRepository;
 
     /**
+     * @var ConversationRepositoryInterface
+     */
+    private $pmConversationRepository;
+
+    /**
      * @var EntityRepository
      */
     private $userRepository;
@@ -51,17 +56,20 @@ final class ConversationRpcResource extends AbstractActionController
     /**
      * ConversationRpcResource constructor.
      * @param ConversationRepositoryInterface $conversationRepository
+     * @param ConversationRepositoryInterface $pmConversationRepository
      * @param EntityRepository $userRepository
      * @param ConversationServiceInterface $conversationService
      */
     public function __construct(
         ConversationRepositoryInterface $conversationRepository,
+        ConversationRepositoryInterface $pmConversationRepository,
         EntityRepository $userRepository,
         ConversationServiceInterface $conversationService
     ) {
-        $this->conversationRepository = $conversationRepository;
-        $this->userRepository         = $userRepository;
-        $this->conversationService    = $conversationService;
+        $this->conversationRepository   = $conversationRepository;
+        $this->userRepository           = $userRepository;
+        $this->conversationService      = $conversationService;
+        $this->pmConversationRepository = $pmConversationRepository;
     }
 
     /**
@@ -79,12 +87,12 @@ final class ConversationRpcResource extends AbstractActionController
 
         /* @var MessageUserInterface $target */
         $target = $this->userRepository->findOneBy(['id' => $this->params()->fromQuery('target')]);
-        if (! $target) {
+        if (!$target) {
             throw new NotFoundException('Target user not found');
         }
 
         try {
-            $conversation = $this->conversationRepository->getConversationBetween($this->identity(), $target);
+            $conversation = $this->pmConversationRepository->getConversationBetween($this->identity(), $target);
         } catch (ConversationNotFound $e) {
             $conversation = $this->conversationService->createBetween($this->identity(), $target);
         }
@@ -103,7 +111,7 @@ final class ConversationRpcResource extends AbstractActionController
      */
     public function addParticipantAction(): Response
     {
-       $conversation = $this->getConversation();
+        $conversation = $this->getConversation();
 
         if (!$this->isGranted(UserMessagePermissions::ADD_PARTICIPANT, $conversation)) {
             throw new ForbiddenException('User does not have permission to add a user to this conversation');

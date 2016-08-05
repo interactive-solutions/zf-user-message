@@ -8,6 +8,7 @@ namespace InteractiveSolutions\UserMessage\Repository;
 
 use Doctrine\Common\Collections\Criteria;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
+use InteractiveSolutions\UserMessage\Entity\DirectConversationEntity;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Repository\Exception\ConversationNotFound;
 use Zend\Paginator\Paginator;
@@ -53,12 +54,12 @@ interface ConversationRepositoryInterface
      * @param MessageUserInterface $user
      * @param MessageUserInterface $secondUser
      *
-     * @return AbstractConversationEntity
+     * @return DirectConversationEntity
      *
      * @throws ConversationNotFound
      */
     public function getConversationBetween(
         MessageUserInterface $user,
         MessageUserInterface $secondUser
-    ): AbstractConversationEntity;
+    ): DirectConversationEntity;
 }
