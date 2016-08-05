@@ -12,6 +12,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
 use InteractiveSolutions\UserMessage\Entity\MessageEntity;
+use InteractiveSolutions\UserMessage\Repository\Exception\MessageNotFound;
 use Zend\Paginator\Paginator as ZendPaginator;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 
@@ -25,8 +26,10 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
         $message = $this->findOneBy(['id' => $id]);
 
         if (!$message) {
-
+            throw new MessageNotFound();
         }
+
+        return $message;
     }
 
     public function getMessagesAssociatedWith(MessageUserInterface $user)
