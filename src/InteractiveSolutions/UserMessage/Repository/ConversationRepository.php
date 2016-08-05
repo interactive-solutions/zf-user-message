@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
+use InteractiveSolutions\UserMessage\Entity\DirectConversationEntity;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Repository\Exception\ConversationNotFound;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
@@ -71,7 +72,7 @@ class ConversationRepository extends EntityRepository implements ConversationRep
             ->andWhere('conversation.type = :type')
             ->setParameter('userId', $user->getId())
             ->setParameter('secondUser', $secondUser)
-            ->setParameter('type', ConversationService::TYPE_DIRECT);
+            ->setParameter('type', DirectConversationEntity::TYPE);
 
         $conversation = $builder->getQuery()->getOneOrNullResult();
 
