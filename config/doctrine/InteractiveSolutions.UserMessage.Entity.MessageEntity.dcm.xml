@@ -5,6 +5,10 @@
                    https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
     <entity name="InteractiveSolutions\UserMessage\Entity\MessageEntity" table="messages" repository-class="InteractiveSolutions\UserMessage\Repository\MessageRepository">
 
+        <indexes>
+            <index name="user_message_created_at_idx" columns="created_at"/>
+        </indexes>
+
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>

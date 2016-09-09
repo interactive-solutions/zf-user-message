@@ -6,6 +6,10 @@
     <entity name="InteractiveSolutions\UserMessage\Entity\NamedConversationEntity"
             repository-class="InteractiveSolutions\UserMessage\Repository\NamedConversationRepository">
 
+        <indexes>
+            <index name="conversation_name_idx" columns="name"/>
+        </indexes>
+
         <field name="name" type="string" unique="true" nullable="false"/>
         <field name="slug" type="string" unique="true" nullable="false"/>
 

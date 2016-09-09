@@ -6,6 +6,10 @@
     <entity name="InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity" inheritance-type="SINGLE_TABLE"
             table="conversations" repository-class="InteractiveSolutions\UserMessage\Repository\ConversationRepository">
 
+        <indexes>
+            <index name="conversation_type_idx" columns="type"/>
+        </indexes>
+
         <id name="id" type="integer">
             <generator strategy="AUTO"/>
         </id>
