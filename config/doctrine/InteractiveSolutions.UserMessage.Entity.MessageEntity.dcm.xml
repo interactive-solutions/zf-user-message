@@ -17,7 +17,7 @@
 
         <field name="createdAt" type="datetime" nullable="false"/>
         <field name="updatedAt" type="datetime" nullable="false"/>
-        <field name="payload" type="json_object" nullable="false"/>
+        <field name="payload" type="json_array" nullable="true"/>
         <field name="readByUsers" type="read_by_users" nullable="true"/>
 
         <many-to-one field="sender" target-entity="InteractiveSolutions\UserMessage\Entity\MessageUserInterface" fetch="EAGER">

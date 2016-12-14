@@ -38,7 +38,7 @@ class MessageEntity
     protected $readByUsers = [];
 
     /**
-     * @var array
+     * @var array|null
      */
     protected $payload;
 
@@ -65,9 +65,9 @@ class MessageEntity
         $this->updatedAt = new DateTime();
 
         $this->message = $data['message'] ?? '';
-        $this->payload = $data['payload'] ?? [];
+        $this->payload = $data['payload'] ?? null;
 
-        if (count($this->message) === 0 && count($this->payload) === 0) {
+        if (strlen($this->message) === 0 && $this->payload === null) {
             throw InvalidMessageException::emptyMessageAndPayload();
         }
 
@@ -113,9 +113,9 @@ class MessageEntity
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getPayload(): array
+    public function getPayload()
     {
         return $this->payload;
     }
