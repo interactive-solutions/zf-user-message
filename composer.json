@@ -2,7 +2,7 @@
   "name": "interactive-solutions/zf-user-message",
   "authors": [
     {
-      "name":  "Jonas Eriksson",
+      "name": "Jonas Eriksson",
       "email": "jonas.eriksson+git@interactivesolutions.se"
     },
     {
@@ -11,14 +11,8 @@
     }
   ],
   "require": {
-    "php":                          ">=5.5",
-    "zendframework/zendframework":  "~2.5",
-    "zfr/zfr-rest":                 "~0.5.0",
-    "doctrine/doctrine-orm-module": "~0.9.2",
-    "zf-commons/zfc-rbac":          "~2.3",
-    "interactive-solutions/zf-stdlib": "~0.0.1"
+    "php": ">=7.1",
   },
-
   "autoload": {
     "psr-0": {
       "InteractiveSolutions\\UserMessage\\": "src/"
