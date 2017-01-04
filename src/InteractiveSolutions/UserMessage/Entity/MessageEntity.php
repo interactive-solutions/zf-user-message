@@ -1,13 +1,14 @@
 <?php
 /**
- * @author Erik Norgren <erik.norgren@interactivesolutions.se>
- * @author Jonas Eriksson <jonas.eriksson@interactivesolutions.se>
+ * @author    Erik Norgren <erik.norgren@interactivesolutions.se>
+ * @author    Jonas Eriksson <jonas.eriksson@interactivesolutions.se>
  * @copyright Interactive Solutions
  */
 
 namespace InteractiveSolutions\UserMessage\Entity;
 
 use DateTime;
+use InteractiveSolutions\UserMessage\Exception\InvalidMessageException;
 
 class MessageEntity
 {
@@ -37,6 +38,11 @@ class MessageEntity
     protected $readByUsers = [];
 
     /**
+     * @var array|null
+     */
+    protected $payload;
+
+    /**
      * @var MessageUserInterface
      */
     protected $sender;
@@ -48,24 +54,31 @@ class MessageEntity
 
     /**
      * MessageEntity constructor.
+     *
      * @param AbstractConversationEntity $conversation
-     * @param MessageUserInterface $sender
-     * @param array $data
+     * @param MessageUserInterface       $sender
+     * @param array                      $data
      */
     public function __construct(AbstractConversationEntity $conversation, MessageUserInterface $sender, array $data)
     {
         $this->createdAt = new DateTime();
         $this->updatedAt = new DateTime();
 
-        $this->message      = $data['message'];
-        $this->conversation = $conversation;
+        $this->message = $data['message'] ?? '';
+        $this->payload = $data['payload'] ?? null;
+
+        if (strlen($this->message) === 0 && $this->payload === null) {
+            throw InvalidMessageException::emptyMessageAndPayload();
+        }
+
         $this->sender       = $sender;
+        $this->conversation = $conversation;
     }
 
     /**
      * Add a ready by user entry
      *
-     * @param MessageEntity $instance
+     * @param MessageEntity   $instance
      * @param ReadByUserEntry $entry
      */
     public static function readByUser(MessageEntity $instance, ReadByUserEntry $entry)
@@ -78,7 +91,7 @@ class MessageEntity
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -86,7 +99,7 @@ class MessageEntity
     /**
      * @return MessageUserInterface
      */
-    public function getSender()
+    public function getSender(): ?MessageUserInterface
     {
         return $this->sender;
     }
@@ -94,15 +107,23 @@ class MessageEntity
     /**
      * @return string
      */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->message;
     }
 
     /**
+     * @return array|null
+     */
+    public function getPayload()
+    {
+        return $this->payload;
+    }
+
+    /**
      * @return DateTime
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -110,7 +131,7 @@ class MessageEntity
     /**
      * @return DateTime
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
@@ -118,7 +139,7 @@ class MessageEntity
     /**
      * @return array
      */
-    public function getReadByUsers()
+    public function getReadByUsers(): array
     {
         return $this->readByUsers;
     }
@@ -126,16 +147,17 @@ class MessageEntity
     /**
      * @return AbstractConversationEntity
      */
-    public function getConversation()
+    public function getConversation(): AbstractConversationEntity
     {
         return $this->conversation;
     }
 
     /**
      * @param int $userId
+     *
      * @return bool
      */
-    private function hasRead(int $userId):bool
+    private function hasRead(int $userId): bool
     {
         /* @var ReadByUserEntry $entry */
         foreach ($this->readByUsers as $entry) {
