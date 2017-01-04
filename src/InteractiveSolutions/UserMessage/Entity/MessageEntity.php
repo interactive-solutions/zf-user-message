@@ -99,7 +99,7 @@ class MessageEntity
     /**
      * @return MessageUserInterface
      */
-    public function getSender(): MessageUserInterface
+    public function getSender(): ?MessageUserInterface
     {
         return $this->sender;
     }
