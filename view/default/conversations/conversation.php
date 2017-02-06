@@ -30,7 +30,7 @@ return [
             'id'        => $message->getId(),
             'message'   => $message->getMessage(),
             'createdAt' => $message->getCreatedAt()->format(DateTime::ISO8601),
-            'author'    => $message->getSender()->getId(),
+            'author'    => $message->getSender() ? $message->getSender()->getId() : null,
         ];
     }, ArrayUtils::iteratorToArray($messages)),
 
