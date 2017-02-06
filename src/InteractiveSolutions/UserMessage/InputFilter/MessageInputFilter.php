@@ -23,7 +23,7 @@ class MessageInputFilter extends InputFilter
         $this->add(
             [
                 'name'       => 'message',
-                'required'   => true,
+                'required'   => false,
                 'validators' => [
                     [
                         'name'    => StringLength::class,
