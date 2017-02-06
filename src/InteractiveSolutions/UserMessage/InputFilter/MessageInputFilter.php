@@ -10,6 +10,7 @@ namespace InteractiveSolutions\UserMessage\InputFilter;
 use InteractiveSolutions\Stdlib\Validator\ObjectExists;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use Zend\InputFilter\InputFilter;
+use Zend\Validator\Callback;
 use Zend\Validator\StringLength;
 
 /**
@@ -21,32 +22,49 @@ class MessageInputFilter extends InputFilter
     {
         $this->add(
             [
-                'name' => 'message',
-                'required' => true,
+                'name'       => 'message',
+                'required'   => true,
                 'validators' => [
                     [
-                        'name' => StringLength::class,
-                        'options' => array(
+                        'name'    => StringLength::class,
+                        'options' => [
                             'min' => 1,
-                        ),
+                        ],
                     ],
-                ]
+                ],
             ]
         );
 
         $this->add(
             [
-                'name' => 'sender',
-                'required' => false,
+                'name'       => 'payload',
+                'required'   => false,
+                'validators' => [
+                    [
+                        'name'    => Callback::class,
+                        'options' => [
+                            'callback' => function ($value) {
+                                return is_array($value);
+                            },
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        $this->add(
+            [
+                'name'       => 'sender',
+                'required'   => false,
                 'validators' => [
                     [
                         'name'    => ObjectExists::class,
                         'options' => [
                             'fields'       => ['id'],
                             'entity_class' => MessageUserInterface::class,
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]
         );
     }
