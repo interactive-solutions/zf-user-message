@@ -8,6 +8,7 @@
 namespace InteractiveSolutions\UserMessage\Controller\Conversation;
 
 use Doctrine\ORM\EntityRepository;
+use Exception;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
 use InteractiveSolutions\UserMessage\Repository\Exception\ConversationNotFound;
 use InteractiveSolutions\UserMessage\UserMessagePermissions;
@@ -18,6 +19,8 @@ use InteractiveSolutions\UserMessage\InputFilter\MessageInputFilter;
 use InteractiveSolutions\UserMessage\Repository\ConversationRepositoryInterface;
 use InteractiveSolutions\UserMessage\Repository\MessageRepositoryInterface;
 use InteractiveSolutions\UserMessage\Service\MessageService;
+use ZfcRbac\Exception\UnauthorizedException;
+use ZfrOAuth2\Server\Exception\InvalidAccessTokenException;
 use ZfrRest\Http\Exception\Client\ForbiddenException;
 use ZfrRest\Http\Exception\Client\NotFoundException;
 use ZfrRest\Mvc\Controller\AbstractRestfulController;
@@ -84,11 +87,16 @@ final class MessageCollectionController extends AbstractRestfulController
 
         $values = $this->validateIncomingData(MessageInputFilter::class);
 
-        $sender = array_key_exists('sender', $values) && $values['sender'] ? $this->userRepository->findOneBy([
-            'id' => $values['sender']
-        ]) : $this->identity();
+        try {
+            $sender = array_key_exists('sender', $values) && $values['sender'] ? $this->userRepository->findOneBy([
+                'id' => $values['sender']
+            ]) : $this->identity();
+        } catch (InvalidAccessTokenException $e) {
+            // If sender is null and a custom identity created the message
+            $sender = null;
+        }
 
-        $messageEntity = new MessageEntity($conversation, $sender, $values);
+        $messageEntity = MessageEntity::create($values, $conversation,  $sender);
 
         $this->messageService->create($messageEntity);
 

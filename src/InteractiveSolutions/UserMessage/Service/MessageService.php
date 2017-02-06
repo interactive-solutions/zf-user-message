@@ -42,14 +42,14 @@ class MessageService implements EventManagerAwareInterface, MessageServiceInterf
     /**
      * Create a new message
      *
-     * @param MessageEntity $messageEntity
+     * @param MessageEntity $message
      */
-    public function create(MessageEntity $messageEntity)
+    public function create(MessageEntity $message)
     {
-        $this->objectManager->persist($messageEntity);
+        $this->objectManager->persist($message);
         $this->objectManager->flush();
 
-        $this->getEventManager()->trigger(self::EVENT_CREATED, $this, ['message' => $messageEntity]);
+        $this->getEventManager()->trigger(self::EVENT_CREATED, $this, ['message' => $message]);
     }
 
     /**

@@ -15,10 +15,10 @@ interface MessageServiceInterface
     /**
      * Creates a message
      *
-     * @param MessageEntity $messageEntity
+     * @param MessageEntity $message
      * @return void
      */
-    public function create(MessageEntity $messageEntity);
+    public function create(MessageEntity $message);
 
     /**
      * Updates a message

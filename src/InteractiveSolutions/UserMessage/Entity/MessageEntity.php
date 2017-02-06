@@ -53,26 +53,32 @@ class MessageEntity
     protected $conversation;
 
     /**
-     * MessageEntity constructor.
-     *
      * @param AbstractConversationEntity $conversation
-     * @param MessageUserInterface       $sender
-     * @param array                      $data
+     * @param MessageUserInterface $sender
+     * @param array $data
+     * @return MessageEntity
      */
-    public function __construct(AbstractConversationEntity $conversation, MessageUserInterface $sender, array $data)
-    {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+    public static function create(
+        array $data,
+        AbstractConversationEntity $conversation,
+        MessageUserInterface $sender = null
+    ): self {
+        $message = new self();
 
-        $this->message = $data['message'] ?? '';
-        $this->payload = $data['payload'] ?? null;
+        $message->createdAt = new DateTime();
+        $message->updatedAt = new DateTime();
 
-        if (strlen($this->message) === 0 && $this->payload === null) {
+        $message->message = $data['message'] ?? '';
+        $message->payload = $data['payload'] ?? null;
+
+        if (strlen($message->message) === 0 && $message->payload === null) {
             throw InvalidMessageException::emptyMessageAndPayload();
         }
 
-        $this->sender       = $sender;
-        $this->conversation = $conversation;
+        $message->sender       = $sender;
+        $message->conversation = $conversation;
+
+        return $message;
     }
 
     /**

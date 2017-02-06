@@ -11,7 +11,7 @@ $message = $this->message;
 return [
     'id'             => $message->getId(),
     'conversationId' => $message->getConversation()->getId(),
-    'senderId'       => $message->getSender()->getId(),
+    'senderId'       => $message->getSender() ? $message->getSender()->getId() : null,
 
     'message'        => $message->getMessage(),
 
