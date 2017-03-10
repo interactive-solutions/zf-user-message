@@ -96,7 +96,7 @@ final class MessageCollectionController extends AbstractRestfulController
             $sender = null;
         }
 
-        $messageEntity = MessageEntity::create($values, $conversation,  $sender);
+        $messageEntity = MessageEntity::create($values, $conversation, $sender);
 
         $this->messageService->create($messageEntity);
 

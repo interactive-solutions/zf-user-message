@@ -14,6 +14,7 @@ return [
     'senderId'       => $message->getSender() ? $message->getSender()->getId() : null,
 
     'message'        => $message->getMessage(),
+    'payload'        => $message->getPayload(),
 
     'createdAt'      => $message->getCreatedAt()->format(DateTime::ISO8601),
     'updatedAt'      => $message->getUpdatedAt()->format(DateTime::ISO8601),
