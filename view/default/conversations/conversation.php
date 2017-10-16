@@ -22,14 +22,14 @@ $messages = $conversation->getMessages()->matching($criteria);
 
 return [
     'id'             => $conversation->getId(),
-    'createdAt'      => $conversation->getCreatedAt()->format(DateTime::ISO8601),
+    'createdAt'      => $conversation->getCreatedAt()->format(DateTime::RFC3339),
     'type'           => $conversation->getType(),
 
     'latestMessages' => array_map(function(MessageEntity $message) {
         return [
             'id'        => $message->getId(),
             'message'   => $message->getMessage(),
-            'createdAt' => $message->getCreatedAt()->format(DateTime::ISO8601),
+            'createdAt' => $message->getCreatedAt()->format(DateTime::RFC3339),
             'author'    => $message->getSender() ? $message->getSender()->getId() : null,
             'payload'   => $message->getPayload()
         ];

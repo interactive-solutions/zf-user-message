@@ -16,13 +16,13 @@ return [
     'message'        => $message->getMessage(),
     'payload'        => $message->getPayload(),
 
-    'createdAt'      => $message->getCreatedAt()->format(DateTime::ISO8601),
-    'updatedAt'      => $message->getUpdatedAt()->format(DateTime::ISO8601),
+    'createdAt'      => $message->getCreatedAt()->format(DateTime::RFC3339),
+    'updatedAt'      => $message->getUpdatedAt()->format(DateTime::RFC3339),
     
     'readByUsers'    => array_map(function(ReadByUserEntry $entry) {
         return [
             'userId' => $entry->getUserId(),
-            'readAt' => $entry->getReadAt()->format(DateTime::ISO8601)
+            'readAt' => $entry->getReadAt()->format(DateTime::RFC3339)
         ];
     }, $message->getReadByUsers())
 ];
