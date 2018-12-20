@@ -10,7 +10,7 @@ namespace InteractiveSolutions\UserMessage\Entity;
 
 use DateTime;
 
-final class DirectConversationEntity extends AbstractConversationEntity
+class DirectConversationEntity extends AbstractConversationEntity
 {
     const TYPE = 'direct';
 

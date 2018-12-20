@@ -11,7 +11,7 @@ namespace InteractiveSolutions\UserMessage\Entity;
 use DateTime;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
 
-final class NamedConversationEntity extends AbstractConversationEntity
+class NamedConversationEntity extends AbstractConversationEntity
 {
     const TYPE = 'named';
 
