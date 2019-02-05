@@ -13,9 +13,8 @@ use InteractiveSolutions\UserMessage\Entity\DirectConversationEntity;
 use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Repository\ConversationRepository;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class ConversationRpcResourceFactory implements FactoryInterface
 {
@@ -23,15 +22,15 @@ class ConversationRpcResourceFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface|ControllerManager $controllerManager
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return ConversationRpcResource
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function createService(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sl = $controllerManager->getServiceLocator();
-
         /* @var EntityManager $entityManager */
-        $entityManager = $sl->get('InteractiveSolutions\Message\ObjectManager');
+        $entityManager = $container->get('InteractiveSolutions\Message\ObjectManager');
 
         /* @var  ConversationRepository $conversationRepository */
         $conversationRepository = $entityManager->getRepository(AbstractConversationEntity::class);
@@ -40,7 +39,7 @@ class ConversationRpcResourceFactory implements FactoryInterface
         $userRepository         = $entityManager->getRepository(MessageUserInterface::class);
 
         /* @var ConversationService $conversationService */
-        $conversationService = $sl->get(ConversationService::class);
+        $conversationService = $container->get(ConversationService::class);
 
         return new ConversationRpcResource(
             $conversationRepository,

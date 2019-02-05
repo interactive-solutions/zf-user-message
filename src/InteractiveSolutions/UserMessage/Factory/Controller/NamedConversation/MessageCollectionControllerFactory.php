@@ -16,14 +16,13 @@ use InteractiveSolutions\UserMessage\Entity\NamedConversationEntity;
 use InteractiveSolutions\UserMessage\Repository\MessageRepository;
 use InteractiveSolutions\UserMessage\Repository\NamedConversationRepository;
 use InteractiveSolutions\UserMessage\Service\MessageService;
-use Zend\Mvc\Controller\ControllerManager;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
-final class MessageCollectionControllerFactory
+final class MessageCollectionControllerFactory implements FactoryInterface
 {
-    public function __invoke(ControllerManager $controllerManager): MessageCollectionController
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): MessageCollectionController
     {
-        $container = $controllerManager->getServiceLocator();
-
         /* @var MessageService $messageService */
         $messageService = $container->get(MessageService::class);
 

@@ -11,17 +11,16 @@ namespace InteractiveSolutions\UserMessage\Factory\Controller;
 use InteractiveSolutions\UserMessage\Controller\NamedConversationCollectionController;
 use InteractiveSolutions\UserMessage\Entity\NamedConversationEntity;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
-use Zend\Mvc\Controller\ControllerManager;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
-final class NamedConversationCollectionControllerFactory
+final class NamedConversationCollectionControllerFactory implements FactoryInterface
 {
-    public function __invoke(ControllerManager $controllerManager): NamedConversationCollectionController
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): NamedConversationCollectionController
     {
-        $sl = $controllerManager->getServiceLocator();
-
         return new NamedConversationCollectionController(
-            $sl->get(ConversationService::class),
-            $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(NamedConversationEntity::class)
+            $container->get(ConversationService::class),
+            $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(NamedConversationEntity::class)
         );
     }
 }

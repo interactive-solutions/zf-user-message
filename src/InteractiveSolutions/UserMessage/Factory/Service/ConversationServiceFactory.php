@@ -8,8 +8,8 @@
 namespace InteractiveSolutions\UserMessage\Factory\Service;
 
 use InteractiveSolutions\UserMessage\Service\ConversationService;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class ConversationServiceFactory
@@ -19,13 +19,15 @@ class ConversationServiceFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return ConversationService
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new ConversationService(
-            $serviceLocator->get('InteractiveSolutions\Message\ObjectManager')
+            $container->get('InteractiveSolutions\Message\ObjectManager')
         );
     }
 }

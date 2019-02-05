@@ -10,8 +10,8 @@ namespace InteractiveSolutions\UserMessage\Factory\Hydrator;
 
 use InteractiveSolutions\UserMessage\Hydrator\ConversationHydrator;
 use InteractiveSolutions\UserMessage\Hydrator\ParticipantsHydrator;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class ConversationHydratorFactory
@@ -21,11 +21,13 @@ class ConversationHydratorFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return ConversationHydrator
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new ConversationHydrator($serviceLocator->get(ParticipantsHydrator::class));
+        return new ConversationHydrator($container->get(ParticipantsHydrator::class));
     }
 }

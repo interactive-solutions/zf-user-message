@@ -14,14 +14,12 @@ use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Entity\NamedConversationEntity;
 use InteractiveSolutions\UserMessage\Repository\NamedConversationRepository;
 use InteractiveSolutions\UserMessage\Service\ConversationService;
-use Zend\Mvc\Controller\ControllerManager;
+
 
 final class NamedConversationRpcResourceFactory
 {
-    public function __invoke(ControllerManager $controllerManager): NamedConversationRpcResource
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): NamedConversationRpcResource
     {
-        $container = $controllerManager->getServiceLocator();
-
         /* @var EntityManager $entityManager */
         $entityManager = $container->get('InteractiveSolutions\Message\ObjectManager');
 
@@ -31,7 +29,7 @@ final class NamedConversationRpcResourceFactory
 
         /* @var ConversationService $conversationService */
         $conversationService = $container->get(ConversationService::class);
-        
+
         return new NamedConversationRpcResource(
             $conversationRepository,
             $userRepository,

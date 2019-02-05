@@ -9,9 +9,8 @@ namespace InteractiveSolutions\UserMessage\Factory\Controller;
 
 use InteractiveSolutions\UserMessage\Controller\MessageResourceController;
 use InteractiveSolutions\UserMessage\Entity\MessageEntity;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class MessageResourceControllerFactory
@@ -21,15 +20,15 @@ class MessageResourceControllerFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ControllerManager|ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return MessageResourceController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sl = $serviceLocator->getServiceLocator();
-
         return new MessageResourceController(
-            $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageEntity::class)
+            $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageEntity::class)
         );
     }
 }
