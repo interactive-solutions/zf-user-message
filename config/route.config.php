@@ -17,8 +17,8 @@ use InteractiveSolutions\UserMessage\Controller\MessageRpcResource;
 use InteractiveSolutions\UserMessage\Controller\NamedConversationCollectionController;
 use InteractiveSolutions\UserMessage\Controller\NamedConversationResourceController;
 use InteractiveSolutions\UserMessage\Controller\NamedConversationRpcResource;
-use Zend\Mvc\Router\Http\Literal;
-use Zend\Mvc\Router\Http\Segment;
+use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
 
 return [
 

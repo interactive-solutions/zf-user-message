@@ -15,9 +15,8 @@ use InteractiveSolutions\UserMessage\Entity\MessageUserInterface;
 use InteractiveSolutions\UserMessage\Repository\ConversationRepository;
 use InteractiveSolutions\UserMessage\Repository\MessageRepository;
 use InteractiveSolutions\UserMessage\Service\MessageService;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+
+use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
  * Class ConversationMessageControllerFactory
@@ -27,24 +26,26 @@ class MessageCollectionControllerFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ControllerManager|ServiceLocatorInterface $serviceLocator
+     * @param ControllerManager|ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return MessageCollectionController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sl = $serviceLocator->getServiceLocator();
+
 
         /* @var MessageService $messageService */
-        $messageService = $sl->get(MessageService::class);
+        $messageService = $container->get(MessageService::class);
 
         /* @var ConversationRepository $conversationRepository */
-        $conversationRepository = $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(AbstractConversationEntity::class);
+        $conversationRepository = $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(AbstractConversationEntity::class);
 
         /* @var MessageRepository $messageRepository */
-        $messageRepository = $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageEntity::class);
+        $messageRepository = $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageEntity::class);
 
         /* @var EntityRepository $userRepository */
-        $userRepository = $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageUserInterface::class);
+        $userRepository = $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(MessageUserInterface::class);
 
         return new MessageCollectionController(
             $messageService,

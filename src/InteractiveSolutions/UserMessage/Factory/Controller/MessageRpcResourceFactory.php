@@ -12,9 +12,9 @@ use InteractiveSolutions\UserMessage\Controller\MessageRpcResource;
 use InteractiveSolutions\UserMessage\Entity\MessageEntity;
 use InteractiveSolutions\UserMessage\Repository\MessageRepository;
 use InteractiveSolutions\UserMessage\Service\MessageService;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
+
 
 class MessageRpcResourceFactory implements FactoryInterface
 {
@@ -22,21 +22,21 @@ class MessageRpcResourceFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface|ControllerManager $controllerManager
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return MessageRpcResource
      */
-    public function createService(ServiceLocatorInterface $controllerManager)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sl = $controllerManager->getServiceLocator();
-
         /* @var EntityManager $entityManager */
-        $entityManager = $sl->get('InteractiveSolutions\Message\ObjectManager');
+        $entityManager = $container->get('InteractiveSolutions\Message\ObjectManager');
 
         /* @var  MessageRepository $messageRepository */
         $messageRepository = $entityManager->getRepository(MessageEntity::class);
 
         /* @var MessageService $messageService */
-        $messageService = $sl->get(MessageService::class);
+        $messageService = $container->get(MessageService::class);
 
         return new MessageRpcResource(
             $messageRepository,

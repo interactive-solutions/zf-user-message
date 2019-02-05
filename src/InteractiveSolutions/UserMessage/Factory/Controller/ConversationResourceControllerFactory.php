@@ -11,9 +11,8 @@ use Doctrine\ORM\EntityManager;
 use InteractiveSolutions\UserMessage\Controller\ConversationResourceController;
 use InteractiveSolutions\UserMessage\Entity\AbstractConversationEntity;
 use InteractiveSolutions\UserMessage\Repository\ConversationRepository;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 /**
  * Class ConversationResourceControllerFactory
@@ -23,17 +22,17 @@ class ConversationResourceControllerFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ControllerManager|ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface $container
+     * @param $requestedName
+     * @param array|null $options
      * @return ConversationResourceController
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $sl = $serviceLocator->getServiceLocator();
-
         /**
          * @var ConversationRepository $conversationRepository
          */
-        $conversationRepository = $sl->get('InteractiveSolutions\Message\ObjectManager')->getRepository(AbstractConversationEntity::class);
+        $conversationRepository = $container->get('InteractiveSolutions\Message\ObjectManager')->getRepository(AbstractConversationEntity::class);
 
         return new ConversationResourceController(
             $conversationRepository
